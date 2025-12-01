@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vertical Images with Footnotes</title>
+  <title>plier. dlplier. replier.</title>
   <style>
     :root{
       --max-width:900px;
@@ -124,28 +124,50 @@
       .caption{font-size:13px}
       .text-block{font-size:15px}
     }
-  </style>
+    /* Floating alternating story boxes */
+    .story-box{
+      position:absolute;
+      bottom:10px;
+      max-width:60%;
+      padding:10px 14px;
+      background:rgba(40,40,40,0.9);
+      color:#eaeaea;
+      font-size:14px;
+      line-height:1.4;
+      border-radius:8px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.6);
+      backdrop-filter:blur(4px);
+    }
+    .story-right{ right:10px; }
+    .story-left{ left:10px; }
+
+  /* Fade-in animation for images + story boxes */
+    figure.photo{opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; position:relative;}
+    figure.photo.visible{opacity:1; transform:translateY(0);}
+
+    .story-box{opacity:0; transition:opacity 1s ease 0.4s;} /* delay so image appears first */
+    figure.photo.visible .story-box{opacity:1;}
+
+</style>
 </head>
 <body>
   <div class="wrap">
     <h1>plier. dlplier. replier.</h1>
-    <p style="color:var(--muted);margin-top:4px">alexis e wood</p>
+    <p style="color:var(--muted);margin-top:4px">alexis e wood, 2025.</p>
 
     <div class="image-list">
 
       <!-- Example photo block: replace the src with your file (e.g. images/photo1.jpg) -->
       <figure class="photo" data-caption="Photo 1 — short caption" tabindex="0">
         <img src="images/photo1.png" alt="Photo 1" loading="lazy">
-
-        <p> I remember playing with fortune tellers in primary school. Four. 1. 2. 3. 4. Red. R. E. D.  </p>
-
-        
         <figcaption class="caption"></figcaption>
+        <div class="story-box story-right">INSERT STORY TEXT HERE</div>
       </figure>
 
       <figure class="photo" data-caption="Photo 2 — more info here" tabindex="0">
-        <img src="images/photo2.png" alt="Photo 2" loading="lazy">
+        <img src="images/photo2.jpg" alt="Photo 2" loading="lazy">
         <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
+        <div class="story-box story-left">INSERT STORY TEXT HERE</div>
       </figure>
 
       <!-- add more figure.photo blocks as needed -->
@@ -220,10 +242,10 @@
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
 
-    //  footnote links focus the footnote and  highlight it
+    // Optional: make footnote links focus the footnote and briefly highlight it
     document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
-        // let the browser scroll; then highlight
+        // let the browser scroll; then briefly highlight
         setTimeout(()=>{
           const id = a.getAttribute('href').slice(1);
           const el = document.getElementById(id);
@@ -234,6 +256,19 @@
           }
         }, 200);
       });
+    });
+  </script>
+  <script>
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {threshold:0.2});
+
+    document.querySelectorAll('figure.photo').forEach(el=>{
+      observer.observe(el);
     });
   </script>
 </body>
