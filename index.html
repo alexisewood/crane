@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>folding</title>
+  <title>Vertical Images with Footnotes</title>
   <style>
     :root{
       --max-width:900px;
@@ -39,7 +39,7 @@
       border-radius:6px;
       overflow:hidden;
       box-shadow: 0 6px 22px rgba(0,0,0,0.7);
-      background:#111;
+      background:#000;
     }
     .photo img{
       display:block;
@@ -128,8 +128,8 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>Gallery (vertical)</h1>
-    <p style="color:var(--muted);margin-top:6px">Put your image files in an <code>images/</code> folder in the same GitHub repo and reference them with relative paths (examples shown below).</p>
+    <h1>plier. dlplier. replier.</h1>
+    <p style="color:var(--muted);margin-top:4px">alexis e wood</p>
 
     <div class="image-list">
 
@@ -140,7 +140,7 @@
       </figure>
 
       <figure class="photo" data-caption="Photo 2 — more info here" tabindex="0">
-        <img src="images/photo2.jpg" alt="Photo 2" loading="lazy">
+        <img src="images/photo2.png" alt="Photo 2" loading="lazy">
         <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
       </figure>
 
@@ -216,10 +216,10 @@
     modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
 
-    // Optional: make footnote links focus the footnote and briefly highlight it
+    //  footnote links focus the footnote and  highlight it
     document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
-        // let the browser scroll; then briefly highlight
+        // let the browser scroll; then highlight
         setTimeout(()=>{
           const id = a.getAttribute('href').slice(1);
           const el = document.getElementById(id);
