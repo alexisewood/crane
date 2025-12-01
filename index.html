@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>folding</title>
+  <style>
+    :root{
+      --max-width:900px;
+      --gap:28px;
+      --text-color: #eaeaea;
+      --muted: #9a9a9a;
+      --accent: #8ab4ff;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background:#000; /* black background */
+      color:var(--text-color);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior: smooth; /* smooth anchor scrolling */
+    }
+    .wrap{
+      max-width:var(--max-width);
+      margin:36px auto;
+      padding:18px;
+    }
+    h1{margin:0 0 12px 0;font-weight:600}
+    .image-list{
+      display:flex;
+      flex-direction:column;
+      gap:var(--gap);
+    }
+    .photo{
+      position:relative;
+      cursor:pointer;
+      border-radius:6px;
+      overflow:hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.7);
+      background:#111;
+    }
+    .photo img{
+      display:block;
+      width:100%;
+      height:auto;
+      vertical-align:middle;
+      transition:transform .28s ease;
+    }
+    .photo:hover img{transform:scale(1.02)}
+    .caption{
+      font-size:14px;
+      color:var(--muted);
+      padding:8px 6px 14px 6px;
+    }
+    /* Footnote inline text */
+    .text-block{
+      margin-top:10px;
+      line-height:1.6;
+      font-size:16px;
+    }
+    .footnote-ref{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      margin-left:6px;
+      font-size:90%;
+    }
+    /* Footnotes section */
+    #footnotes{
+      margin-top:48px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      padding-top:22px;
+      color:var(--muted);
+    }
+    .footnote-item{
+      margin:14px 0;
+      font-size:15px;
+      line-height:1.5;
+    }
+    .backref{
+      margin-left:8px;
+      color:var(--accent);
+      text-decoration:none;
+    }
+    /* Modal for enlarged image */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      background:rgba(0,0,0,0.8);
+      padding:20px;
+    }
+    .modal.open{display:flex}
+    .modal-content{
+      max-width:92vw;
+      max-height:90vh;
+      overflow:auto;
+      border-radius:8px;
+      background:linear-gradient(180deg,#0b0b0b,#101010);
+      padding:18px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.9);
+    }
+    .modal-content img{display:block;max-width:100%;height:auto;border-radius:4px}
+    .modal-caption{color:var(--muted);font-size:14px;margin-top:8px}
+    .modal-close{
+      position:absolute;top:18px;right:22px;color:#fff;font-size:22px;text-decoration:none;
+    }
+    /* Responsive tweaks */
+    @media (max-width:640px){
+      :root{--max-width:100vw; --gap:20px;}
+      body{padding:0 0 30px 0;}
+      .wrap{padding:12px; margin:20px auto;}
+      .caption{font-size:13px; padding:6px 4px 12px 4px;}
+      .text-block{font-size:15px;}
+      h1{font-size:20px;}
+      #footnotes h2{font-size:16px;}
+      .modal-content{padding:12px; max-width:95vw; max-height:88vh;}
+    }
+      .caption{font-size:13px}
+      .text-block{font-size:15px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Gallery (vertical)</h1>
+    <p style="color:var(--muted);margin-top:6px">Put your image files in an <code>images/</code> folder in the same GitHub repo and reference them with relative paths (examples shown below).</p>
+
+    <div class="image-list">
+
+      <!-- Example photo block: replace the src with your file (e.g. images/photo1.jpg) -->
+      <figure class="photo" data-caption="Photo 1 — short caption" tabindex="0">
+        <img src="images/photo1.jpg" alt="Photo 1" loading="lazy">
+        <figcaption class="caption">Photo 1 — click to enlarge</figcaption>
+      </figure>
+
+      <figure class="photo" data-caption="Photo 2 — more info here" tabindex="0">
+        <img src="images/photo2.jpg" alt="Photo 2" loading="lazy">
+        <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
+      </figure>
+
+      <!-- add more figure.photo blocks as needed -->
+    </div>
+
+    <!-- Text with footnote references -->
+    <div class="text-block">
+      <p>
+        This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a> that will jump to the footnote below.
+      </p>
+
+      <p>
+        Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a> and some more text for context.
+      </p>
+    </div>
+
+    <!-- Footnotes (target anchors) -->
+    <section id="footnotes">
+      <h2 style="color:var(--text-color);margin:0 0 12px 0;font-size:18px">Footnotes</h2>
+
+      <div class="footnote-item" id="fn1">
+        <strong>[1]</strong> Longer paragraph text for footnote 1. Put whatever extended explanation or bibliographic detail you want here. It can be several sentences or multiple paragraphs.
+        <a class="backref" href="#ref-fn1">↩︎ back</a>
+      </div>
+
+      <div class="footnote-item" id="fn2">
+        <strong>[2]</strong> Longer paragraph text for footnote 2. You can reference images, give credits, or include additional links here.
+        <a class="backref" href="#ref-fn2">↩︎ back</a>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- Modal for enlarged images -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <a href="#" class="modal-close" id="modalClose" aria-label="Close">✕</a>
+    <div class="modal-content" id="modalContent">
+      <img id="modalImg" src="" alt="">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    // --- Modal logic for image enlarge ---
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.photo').forEach(fig => {
+      fig.addEventListener('click', () => openModal(fig));
+      fig.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(fig); });
+    });
+
+    function openModal(fig){
+      const img = fig.querySelector('img');
+      modalImg.src = img.src; // uses same file; if you want hi-res use different path
+      modalImg.alt = img.alt || '';
+      modalCaption.textContent = fig.dataset.caption || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      modalImg.src = '';
+      modalCaption.textContent = '';
+    }
+
+    modalClose.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+    // Optional: make footnote links focus the footnote and briefly highlight it
+    document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        // let the browser scroll; then briefly highlight
+        setTimeout(()=>{
+          const id = a.getAttribute('href').slice(1);
+          const el = document.getElementById(id);
+          if(el){
+            el.style.transition = 'background-color 0.4s ease';
+            el.style.backgroundColor = 'rgba(138,180,255,0.06)';
+            setTimeout(()=>el.style.backgroundColor = 'transparent',900);
+          }
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>
