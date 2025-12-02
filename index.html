@@ -134,11 +134,7 @@ figure.photo{opacity:0; transform:translateY(20px); transition:opacity 0.8s ease
 figure.photo.visible{opacity:1; transform:translateY(0);}
 figure.photo.visible .story-box{opacity:1;}
 <div class="image-list">
-  <!-- First story-box -->
-  <figure class="photo" data-caption="Photo 1" tabindex="0">
-    <img src="images/photo1.png" alt="Photo 1" loading="lazy">
-    <figcaption class="caption"></figcaption>
-    <div class="story-box story-right">
+
 
     @media (max-width:640px){
       :root{--max-width:100vw; --gap:20px;}
@@ -165,7 +161,12 @@ figure.photo.visible .story-box{opacity:1;}
         <img src="images/photo1.png" alt="Photo 1" loading="lazy">
         <figcaption class="caption"></figcaption>
 
-        <div class="story-box story-right">
+        <!-- First story-box -->
+  <figure class="photo" data-caption="Photo 1" tabindex="0">
+    <img src="images/photo1.png" alt="Photo 1" loading="lazy">
+    <figcaption class="caption"></figcaption>
+    <div class="story-box story-right">
+      
 remember  
 being small  
 in primary school  
@@ -239,12 +240,13 @@ is a fortune teller
       </figure>
     </div>
 
-    <!-- IMAGE 3 (WITH FULL POEM) -->
-    <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
-      <img src="images/photo3.png" alt="Photo 3" loading="lazy">
-      <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
-
-      <div class="story-box.relative story-right">
+<!-- Third story -->
+  <figure class="photo" data-caption="Photo 3" tabindex="0">
+    <img src="images/photo3.png" alt="Photo 3" loading="lazy">
+    <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
+  </figure>
+  <div class="story-block-below">
+    
 remember  
 when you were 15, angsty  
   reading Vonnegut's <em>Slaughterhouse Five</em>  
@@ -331,6 +333,8 @@ in motion
       </div>
     </section>
   </div>
+
+  
 
   <!-- MODAL -->
   <div id="modal" class="modal" role="dialog" aria-hidden="true">
