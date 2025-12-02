@@ -1,3 +1,90 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>plier. dlplier. replier.</title>
+  <style>
+    :root{
+      --max-width:900px;
+      --gap:28px;
+      --text-color: #eaeaea;
+      --muted: #9a9a9a;
+      --accent: #8ab4ff;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      background:#000;
+      color:var(--text-color);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior: smooth;
+    }
+    .wrap{
+      max-width:var(--max-width);
+      margin:36px auto;
+      padding:18px;
+    }
+    h1{margin:0 0 12px 0;font-weight:600}
+    .image-list{
+      display:flex;
+      flex-direction:column;
+      gap:var(--gap);
+    }
+    .photo{
+      position:relative;
+      cursor:pointer;
+      border-radius:6px;
+      overflow:hidden;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.7);
+      background:#000;
+    }
+    .photo img{
+      display:block;
+      width:100%;
+      height:auto;
+      vertical-align:middle;
+      transition:transform .28s ease;
+    }
+    .photo:hover img{transform:scale(1.02)}
+    .caption{
+      font-size:14px;
+      color:var(--muted);
+      padding:8px 6px 14px 6px;
+    }
+    .text-block{
+      margin-top:10px;
+      line-height:1.6;
+      font-size:16px;
+    }
+    .footnote-ref{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      margin-left:6px;
+      font-size:90%;
+    }
+    #footnotes{
+      margin-top:48px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      padding-top:22px;
+      color:var(--muted);
+    }
+    .footnote-item{
+      margin:14px 0;
+      font-size:15px;
+      line-height:1.5;
+    }
+    .backref{
+      margin-left:8px;
+      color:var(--accent);
+      text-decoration:none;
+    }
+
+```
 /* MODAL */
 .modal{
   position:fixed;
@@ -25,7 +112,7 @@
   position:absolute;top:18px;right:22px;color:#fff;font-size:22px;text-decoration:none;
 }
 
-/* Floating alternating story boxes */
+/* Floating story boxes */
 .story-box{
   max-width:60%;
   padding:10px 14px;
@@ -57,6 +144,17 @@ figure.photo.visible .story-box{opacity:1;}
   #footnotes h2{font-size:16px;}
   .modal-content{padding:12px; max-width:95vw; max-height:88vh;}
 }
+```
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>plier. dlplier. replier.</h1>
+    <p style="color:var(--muted);margin-top:4px">alexis e wood, 2025.</p>
+
+```
 <div class="image-list">
 
   <!-- IMAGE 1 -->
@@ -64,172 +162,170 @@ figure.photo.visible .story-box{opacity:1;}
     <img src="images/photo1.png" alt="Photo 1" loading="lazy">
     <figcaption class="caption"></figcaption>
     <div class="story-box story-right">
-      
-remember  
-being small  
-in primary school  
+```
 
-    playing with  
-    paper fortune tellers  
+remember
+being small
+in primary school
 
-girls at your table  
-    anxiously  
-        giddy  
+playing with
+paper fortune tellers
 
+girls at your table
+anxiously
+giddy
 
-        Four.  
+Four.
 
+1.
+2.
+3.
+4.
 
-              1.  
-          2.  
-              3.  
-          4.  
+Red.
 
+R.
+E.
+D! </div> </figure>
 
-        Red.  
-
-
-            R.  
-                E.  
-                    D!
-    
- 
-
-      <!-- IMAGE 2 -->
+```
+  <!-- IMAGE 2 -->
   <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
     <img src="images/photo2.png" alt="Photo 2" loading="lazy">
     <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
     <div class="story-box story-left">
-remember    
-that nonautonomy  
-as a child  
+```
 
-    actions  
-        dictated otherwise  
-        by someone else   
+remember
+that nonautonomy
+as a child
 
-remember  
-the comfort in embracing 
-that other  
+actions
+dictated otherwise
+by someone else
 
-    dictated not by someone else  
+remember
+the comfort in embracing
+that other
 
-but by something else  
-already existing  
-in motion  
+dictated not by someone else
 
-there is  
-    no anger  
-        no grief  
-if choices  
-    are not mine to make  
+but by something else
+already existing
+in motion
 
-they sit along the ridges  
-of this folded paper  
+there is
+no anger
+no grief
+if choices
+are not mine to make
 
-        hidden  
-        waiting to unfold  
-          
-something else  
-is a fortune teller  
-        waiting to unfold
-    
+they sit along the ridges
+of this folded paper
 
-    <!-- IMAGE 3 -->
+hidden
+waiting to unfold
+
+something else
+is a fortune teller
+waiting to unfold </div> </figure>
+
+```
+  <!-- IMAGE 3 -->
   <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
     <img src="images/photo3.png" alt="Photo 3" loading="lazy">
     <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
-  </figure>
     <div class="story-box relative">
-    
-remember  
-when you were 15, angsty  
-  reading Vonnegut's <em>Slaughterhouse Five</em>  
-   
-        time is annihilated by space
+```
 
-simultaneously Billy Pilgrim  
-  becomes a father and  
-            is dead, and  
-                    is born, into the  
-                    the bombing of Dresden,  
+remember
+when you were 15, angsty
+reading Vonnegut's <em>Slaughterhouse Five</em>
 
-Tralfamadorians laughing  
-        at the futility of human time  
+time is annihilated by space
 
-human time, human time, human time  
-        tumbling around  
-                in the Tralfamadorian zoo
+simultaneously Billy Pilgrim
+becomes a father and
+is dead, and
+is born, into the
+bombing of Dresden,
 
-in that school interview  
-    you explain that time  
-            is not real  
-you are simultaneously  
-    alive,  
-        and dead, and 
-      everything in-between
+Tralfamadorians laughing
+at the futility of human time
+
+human time, human time, human time
+tumbling around
+in the Tralfamadorian zoo
+
+in that school interview
+you explain that time
+is not real
+you are simultaneously
+alive,
+and dead, and
+everything in-between
 
 “Everything that ever has been always will be,
 and everything that ever will be always has been”.
 
-remember  
-how this simultaneity  
-            gives you a place at school  
-and a social worker,  
-        for that angst
-  
-   
+remember
+how this simultaneity
+gives you a place at school
+and a social worker,
+for that angst </div> </figure>
 
-      <!-- IMAGE 4 -->
+```
+  <!-- IMAGE 4 -->
   <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
     <img src="images/photo4.png" alt="Photo 4" loading="lazy">
     <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
-  </figure>
     <div class="story-box story-left">
-remember    
-that nonautonomy  
-as a child  
+```
 
-    actions  
-        dictated otherwise  
-        by someone else   
+remember
+that nonautonomy
+as a child
 
-remember  
-the comfort in embracing 
-that other  
+actions
+dictated otherwise
+by someone else
 
-    dictated not by someone else  
+remember
+the comfort in embracing
+that other
 
-but by something else  
-already existing  
-in motion  
+dictated not by someone else
 
+but by something else
+already existing
+in motion </div> </figure>
 
-        </div>
-    
+```
+</div>
 
-    <!-- FOOTNOTES EXAMPLE -->
-    <div class="text-block">
-      <p>This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a>.</p>
-      <p>Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a>.</p>
-    </div>
+<!-- FOOTNOTES EXAMPLE -->
+<div class="text-block">
+  <p>This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a>.</p>
+  <p>Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a>.</p>
+</div>
 
-    <section id="footnotes">
-      <h2 style="color:var(--text-color);margin:0 0 12px 0;font-size:18px">Footnotes</h2>
-      <div class="footnote-item" id="fn1">
-        <strong>[1]</strong> Longer paragraph text for footnote 1.
-        <a class="backref" href="#ref-fn1">↩︎ back</a>
-      </div>
-      <div class="footnote-item" id="fn2">
-        <strong>[2]</strong> Footnote text for reference.
-        <a class="backref" href="#ref-fn2">↩︎ back</a>
-      </div>
-    </section>
+<section id="footnotes">
+  <h2 style="color:var(--text-color);margin:0 0 12px 0;font-size:18px">Footnotes</h2>
+  <div class="footnote-item" id="fn1">
+    <strong>[1]</strong> Longer paragraph text for footnote 1.
+    <a class="backref" href="#ref-fn1">↩︎ back</a>
+  </div>
+  <div class="footnote-item" id="fn2">
+    <strong>[2]</strong> Footnote text for reference.
+    <a class="backref" href="#ref-fn2">↩︎ back</a>
+  </div>
+</section>
+```
+
   </div>
 
-  
-
   <!-- MODAL -->
+
   <div id="modal" class="modal" role="dialog" aria-hidden="true">
     <a href="#" class="modal-close" id="modalClose" aria-label="Close">✕</a>
     <div class="modal-content" id="modalContent">
