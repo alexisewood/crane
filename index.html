@@ -1,116 +1,31 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>plier. dlplier. replier.</title>
-  <style>
-    :root{
-      --max-width:900px;
-      --gap:28px;
-      --text-color: #eaeaea;
-      --muted: #9a9a9a;
-      --accent: #8ab4ff;
-    }
-    html,body{
-      height:100%;
-      margin:0;
-      background:#000;
-      color:var(--text-color);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      scroll-behavior: smooth;
-    }
-    .wrap{
-      max-width:var(--max-width);
-      margin:36px auto;
-      padding:18px;
-    }
-    h1{margin:0 0 12px 0;font-weight:600}
-    .image-list{
-      display:flex;
-      flex-direction:column;
-      gap:var(--gap);
-    }
-    .photo{
-      position:relative;
-      cursor:pointer;
-      border-radius:6px;
-      overflow:hidden;
-      box-shadow: 0 6px 22px rgba(0,0,0,0.7);
-      background:#000;
-    }
-    .photo img{
-      display:block;
-      width:100%;
-      height:auto;
-      vertical-align:middle;
-      transition:transform .28s ease;
-    }
-    .photo:hover img{transform:scale(1.02)}
-    .caption{
-      font-size:14px;
-      color:var(--muted);
-      padding:8px 6px 14px 6px;
-    }
-    .text-block{
-      margin-top:10px;
-      line-height:1.6;
-      font-size:16px;
-    }
-    .footnote-ref{
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      margin-left:6px;
-      font-size:90%;
-    }
-    #footnotes{
-      margin-top:48px;
-      border-top:1px solid rgba(255,255,255,0.06);
-      padding-top:22px;
-      color:var(--muted);
-    }
-    .footnote-item{
-      margin:14px 0;
-      font-size:15px;
-      line-height:1.5;
-    }
-    .backref{
-      margin-left:8px;
-      color:var(--accent);
-      text-decoration:none;
-    }
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  background:rgba(0,0,0,0.8);
+  padding:20px;
+}
+.modal.open{display:flex}
+.modal-content{
+  max-width:92vw;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:8px;
+  background:linear-gradient(180deg,#0b0b0b,#101010);
+  padding:18px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.9);
+}
+.modal-content img{display:block;max-width:100%;height:auto;border-radius:4px}
+.modal-caption{color:var(--muted);font-size:14px;margin-top:8px}
+.modal-close{
+  position:absolute;top:18px;right:22px;color:#fff;font-size:22px;text-decoration:none;
+}
 
-    /* MODAL */
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      background:rgba(0,0,0,0.8);
-      padding:20px;
-    }
-    .modal.open{display:flex}
-    .modal-content{
-      max-width:92vw;
-      max-height:90vh;
-      overflow:auto;
-      border-radius:8px;
-      background:linear-gradient(180deg,#0b0b0b,#101010);
-      padding:18px;
-      box-shadow:0 12px 40px rgba(0,0,0,0.9);
-    }
-    .modal-content img{display:block;max-width:100%;height:auto;border-radius:4px}
-    .modal-caption{color:var(--muted);font-size:14px;margin-top:8px}
-    .modal-close{
-      position:absolute;top:18px;right:22px;color:#fff;font-size:22px;text-decoration:none;
-    }
-
-    /* Floating alternating story boxes */
+/* Floating alternating story boxes */
 .story-box{
   max-width:60%;
   padding:10px 14px;
@@ -126,42 +41,25 @@
 }
 .story-right{ position:absolute; bottom:10px; right:10px; }
 .story-left{ position:absolute; bottom:10px; left:10px; }
-
-/* Third story-box relative so it doesn’t cut off */
 .story-box.relative{ position: relative; margin-top:12px; max-width:100%; }
 
 figure.photo{opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; position:relative;}
 figure.photo.visible{opacity:1; transform:translateY(0);}
 figure.photo.visible .story-box{opacity:1;}
+
+@media (max-width:640px){
+  :root{--max-width:100vw; --gap:20px;}
+  body{padding:0 0 30px 0;}
+  .wrap{padding:12px; margin:20px auto;}
+  .caption{font-size:13px; padding:6px 4px 12px 4px;}
+  .text-block{font-size:15px;}
+  h1{font-size:20px;}
+  #footnotes h2{font-size:16px;}
+  .modal-content{padding:12px; max-width:95vw; max-height:88vh;}
+}
 <div class="image-list">
 
-
-    @media (max-width:640px){
-      :root{--max-width:100vw; --gap:20px;}
-      body{padding:0 0 30px 0;}
-      .wrap{padding:12px; margin:20px auto;}
-      .caption{font-size:13px; padding:6px 4px 12px 4px;}
-      .text-block{font-size:15px;}
-      h1{font-size:20px;}
-      #footnotes h2{font-size:16px;}
-      .modal-content{padding:12px; max-width:95vw; max-height:88vh;}
-    }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <h1>plier. dlplier. replier.</h1>
-    <p style="color:var(--muted);margin-top:4px">alexis e wood, 2025.</p>
-
-    <div class="image-list">
-
-      <!-- IMAGE 1 -->
-      <figure class="photo" data-caption="Photo 1" tabindex="0">
-        <img src="images/photo1.png" alt="Photo 1" loading="lazy">
-        <figcaption class="caption"></figcaption>
-
-        <!-- First story-box -->
+  <!-- IMAGE 1 -->
   <figure class="photo" data-caption="Photo 1" tabindex="0">
     <img src="images/photo1.png" alt="Photo 1" loading="lazy">
     <figcaption class="caption"></figcaption>
@@ -194,15 +92,14 @@ girls at your table
             R.  
                 E.  
                     D!
-        </div>
-      </figure>
+    
+ 
 
       <!-- IMAGE 2 -->
-      <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
-        <img src="images/photo2.png" alt="Photo 2" loading="lazy">
-        <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
-
-        <div class="story-box story-left">
+  <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
+    <img src="images/photo2.png" alt="Photo 2" loading="lazy">
+    <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
+    <div class="story-box story-left">
 remember    
 that nonautonomy  
 as a child  
@@ -236,16 +133,14 @@ of this folded paper
 something else  
 is a fortune teller  
         waiting to unfold
-        </div>
-      </figure>
-    </div>
+    
 
-<!-- Third story -->
-  <figure class="photo" data-caption="Photo 3" tabindex="0">
+    <!-- IMAGE 3 -->
+  <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
     <img src="images/photo3.png" alt="Photo 3" loading="lazy">
     <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
   </figure>
-  <div class="story-block-below">
+    <div class="story-box relative">
     
 remember  
 when you were 15, angsty  
@@ -282,16 +177,15 @@ how this simultaneity
             gives you a place at school  
 and a social worker,  
         for that angst
-      </div>
-    </figure>
-  </div>
+  
+   
 
-         <!-- IMAGE 4 -->
-      <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
-        <img src="images/photo4.png" alt="Photo 4" loading="lazy">
-        <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
-
-        <div class="story-box story-left">
+      <!-- IMAGE 4 -->
+  <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
+    <img src="images/photo4.png" alt="Photo 4" loading="lazy">
+    <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
+  </figure>
+    <div class="story-box story-left">
 remember    
 that nonautonomy  
 as a child  
@@ -312,8 +206,7 @@ in motion
 
 
         </div>
-      </figure>
-    </div>
+    
 
     <!-- FOOTNOTES EXAMPLE -->
     <div class="text-block">
