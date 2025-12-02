@@ -1,396 +1,401 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>plier. dlplier. replier.</title>
+
   <style>
     :root{
       --max-width:900px;
       --gap:28px;
-      --text-color: #eaeaea;
-      --muted: #9a9a9a;
-      --accent: #8ab4ff;
+      --text-color:#eaeaea;
+      --muted:#9a9a9a;
+      --accent:#8ab4ff;
     }
+
     html,body{
       height:100%;
       margin:0;
       background:#000;
       color:var(--text-color);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      scroll-behavior: smooth;
+      scroll-behavior:smooth;
     }
+
     .wrap{
       max-width:var(--max-width);
       margin:36px auto;
       padding:18px;
     }
+
     h1{margin:0 0 12px 0;font-weight:600}
+
     .image-list{
       display:flex;
       flex-direction:column;
       gap:var(--gap);
     }
-    .photo{
+
+    figure.photo{
       position:relative;
-      cursor:pointer;
       border-radius:6px;
       overflow:hidden;
-      box-shadow: 0 6px 22px rgba(0,0,0,0.7);
       background:#000;
+      cursor:pointer;
+      box-shadow:0 6px 22px rgba(0,0,0,0.7);
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity 0.8s ease, transform 0.8s ease;
     }
+    figure.photo.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
     .photo img{
-      display:block;
       width:100%;
+      display:block;
       height:auto;
-      vertical-align:middle;
-      transition:transform .28s ease;
+      transition:transform .3s ease;
     }
-    .photo:hover img{transform:scale(1.02)}
+    .photo:hover img{
+      transform:scale(1.02);
+    }
+
     .caption{
       font-size:14px;
       color:var(--muted);
       padding:8px 6px 14px 6px;
     }
-    .text-block{
-      margin-top:10px;
-      line-height:1.6;
-      font-size:16px;
+
+    /* Story Boxes */
+    .story-box{
+      position:absolute;       /* RESTORED — floating on images */
+      bottom:10px;
+      max-width:60%;
+      padding:10px 14px;
+      background:rgba(40,40,40,0.9);
+      color:#eaeaea;
+      font-size:14px;
+      line-height:1.4;
+      border-radius:8px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.6);
+      backdrop-filter:blur(4px);
+      opacity:0;
+      transition:opacity 1s ease 0.4s;
     }
-    .footnote-ref{
-      color:var(--accent);
+    figure.photo.visible .story-box{opacity:1;}
+
+    .story-right{right:10px;}
+    .story-left{left:10px;}
+
+    /* Special case: story box below image (for the poem) */
+    .story-box.relative{
+      position:relative !important; 
+      bottom:auto;
+      left:auto;
+      right:auto;
+      max-width:100%;
+      margin-top:12px;
+    }
+
+    /* Footnotes */
+    .text-block{margin-top:10px;line-height:1.6;font-size:16px;}
+    .footnote-ref{color:var(--accent);text-decoration:none;font-weight:600;margin-left:6px;}
+    #footnotes{margin-top:48px;border-top:1px solid rgba(255,255,255,0.06);padding-top:22px;color:var(--muted);}
+    .footnote-item{margin:14px 0;font-size:15px;line-height:1.5;}
+    .backref{margin-left:8px;color:var(--accent);text-decoration:none;}
+
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.8);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+      padding:20px;
+    }
+    .modal.open{display:flex;}
+    .modal-content{
+      max-width:92vw;
+      max-height:90vh;
+      overflow:auto;
+      background:linear-gradient(180deg,#0b0b0b,#101010);
+      padding:18px;
+      border-radius:8px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.9);
+    }
+    .modal-content img{width:100%;height:auto;border-radius:4px;}
+    .modal-caption{color:var(--muted);font-size:14px;margin-top:8px;}
+    .modal-close{
+      position:absolute;
+      top:18px;
+      right:22px;
+      color:#fff;
+      font-size:22px;
       text-decoration:none;
-      font-weight:600;
-      margin-left:6px;
-      font-size:90%;
-    }
-    #footnotes{
-      margin-top:48px;
-      border-top:1px solid rgba(255,255,255,0.06);
-      padding-top:22px;
-      color:var(--muted);
-    }
-    .footnote-item{
-      margin:14px 0;
-      font-size:15px;
-      line-height:1.5;
-    }
-    .backref{
-      margin-left:8px;
-      color:var(--accent);
-      text-decoration:none;
     }
 
-```
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  background:rgba(0,0,0,0.8);
-  padding:20px;
-}
-.modal.open{display:flex}
-.modal-content{
-  max-width:92vw;
-  max-height:90vh;
-  overflow:auto;
-  border-radius:8px;
-  background:linear-gradient(180deg,#0b0b0b,#101010);
-  padding:18px;
-  box-shadow:0 12px 40px rgba(0,0,0,0.9);
-}
-.modal-content img{display:block;max-width:100%;height:auto;border-radius:4px}
-.modal-caption{color:var(--muted);font-size:14px;margin-top:8px}
-.modal-close{
-  position:absolute;top:18px;right:22px;color:#fff;font-size:22px;text-decoration:none;
-}
-
-/* Floating story boxes */
-.story-box{
-  max-width:60%;
-  padding:10px 14px;
-  background:rgba(40,40,40,0.9);
-  color:#eaeaea;
-  font-size:14px;
-  line-height:1.4;
-  border-radius:8px;
-  box-shadow:0 4px 14px rgba(0,0,0,0.6);
-  backdrop-filter:blur(4px);
-  opacity:0;
-  transition:opacity 1s ease 0.4s;
-}
-.story-right{ position:absolute; bottom:10px; right:10px; }
-.story-left{ position:absolute; bottom:10px; left:10px; }
-.story-box.relative{ position: relative; margin-top:12px; max-width:100%; }
-
-figure.photo{opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; position:relative;}
-figure.photo.visible{opacity:1; transform:translateY(0);}
-figure.photo.visible .story-box{opacity:1;}
-
-@media (max-width:640px){
-  :root{--max-width:100vw; --gap:20px;}
-  body{padding:0 0 30px 0;}
-  .wrap{padding:12px; margin:20px auto;}
-  .caption{font-size:13px; padding:6px 4px 12px 4px;}
-  .text-block{font-size:15px;}
-  h1{font-size:20px;}
-  #footnotes h2{font-size:16px;}
-  .modal-content{padding:12px; max-width:95vw; max-height:88vh;}
-}
-```
-
+    @media(max-width:640px){
+      :root{--max-width:100vw;--gap:20px;}
+      .wrap{padding:12px;margin:20px auto;}
+      h1{font-size:20px;}
+      .caption{font-size:13px;}
+      .text-block{font-size:15px;}
+      .modal-content{padding:12px;max-width:95vw;max-height:88vh;}
+      .story-box{max-width:80%;}
+    }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <h1>plier. dlplier. replier.</h1>
-    <p style="color:var(--muted);margin-top:4px">alexis e wood, 2025.</p>
+<div class="wrap">
+  <h1>plier. dlplier. replier.</h1>
+  <p style="color:var(--muted);margin-top:4px">alexis e wood, 2025.</p>
 
-```
-<div class="image-list">
+  <div class="image-list">
 
-  <!-- IMAGE 1 -->
-  <figure class="photo" data-caption="Photo 1" tabindex="0">
-    <img src="images/photo1.png" alt="Photo 1" loading="lazy">
-    <figcaption class="caption"></figcaption>
-    <div class="story-box story-right">
-```
+    <!-- IMAGE 1 -->
+    <figure class="photo" data-caption="Photo 1" tabindex="0">
+      <img src="images/photo1.png" alt="Photo 1" loading="lazy">
+      <figcaption class="caption"></figcaption>
 
-remember
-being small
-in primary school
+      <div class="story-box story-right">
+remember  
+being small  
+in primary school  
 
-playing with
-paper fortune tellers
+playing with  
+paper fortune tellers  
 
-girls at your table
-anxiously
-giddy
+girls at your table  
+anxiously  
+giddy  
 
-Four.
+Four.  
 
-1.
-2.
-3.
-4.
+1.  
+2.  
+3.  
+4.  
 
-Red.
+Red.  
 
-R.
-E.
-D! </div> </figure>
+R.  
+E.  
+D!  
+      </div>
+    </figure>
 
-```
-  <!-- IMAGE 2 -->
-  <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
-    <img src="images/photo2.png" alt="Photo 2" loading="lazy">
-    <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
-    <div class="story-box story-left">
-```
+    <!-- IMAGE 2 -->
+    <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
+      <img src="images/photo2.png" alt="Photo 2" loading="lazy">
+      <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
 
-remember
-that nonautonomy
-as a child
+      <div class="story-box story-left">
+remember  
+that nonautonomy  
+as a child  
 
-actions
-dictated otherwise
-by someone else
+actions  
+dictated otherwise  
+by someone else  
 
-remember
-the comfort in embracing
-that other
+remember  
+the comfort in embracing  
+that other  
 
-dictated not by someone else
+dictated not by someone else  
 
-but by something else
-already existing
-in motion
+but by something else  
+already existing  
+in motion  
 
-there is
-no anger
-no grief
-if choices
-are not mine to make
+there is  
+no anger  
+no grief  
+if choices  
+are not mine to make  
 
-they sit along the ridges
-of this folded paper
+they sit along the ridges  
+of this folded paper  
 
-hidden
-waiting to unfold
+hidden  
+waiting to unfold  
 
-something else
-is a fortune teller
-waiting to unfold </div> </figure>
+something else  
+is a fortune teller  
+waiting to unfold  
+      </div>
+    </figure>
 
-```
-  <!-- IMAGE 3 -->
-  <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
-    <img src="images/photo3.png" alt="Photo 3" loading="lazy">
-    <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
-    <div class="story-box relative">
-```
+    <!-- IMAGE 3 -->
+    <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
+      <img src="images/photo3.png" alt="Photo 3" loading="lazy">
+      <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
 
-remember
-when you were 15, angsty
-reading Vonnegut's <em>Slaughterhouse Five</em>
+      <div class="story-box relative">
+remember  
+when you were 15, angsty  
+reading Vonnegut's <em>Slaughterhouse Five</em>  
 
-time is annihilated by space
+time is annihilated by space  
 
-simultaneously Billy Pilgrim
-becomes a father and
-is dead, and
-is born, into the
-bombing of Dresden,
+simultaneously Billy Pilgrim  
+becomes a father and  
+is dead, and  
+is born, into the  
+bombing of Dresden,  
 
-Tralfamadorians laughing
-at the futility of human time
+Tralfamadorians laughing  
+at the futility of human time  
 
-human time, human time, human time
-tumbling around
-in the Tralfamadorian zoo
+human time, human time, human time  
+tumbling around  
+in the Tralfamadorian zoo  
 
-in that school interview
-you explain that time
-is not real
-you are simultaneously
-alive,
-and dead, and
-everything in-between
+in that school interview  
+you explain that time  
+is not real  
+you are simultaneously  
+alive,  
+and dead, and  
+everything in-between  
 
-“Everything that ever has been always will be,
-and everything that ever will be always has been”.
+“Everything that ever has been always will be,  
+and everything that ever will be always has been”.  
 
-remember
-how this simultaneity
-gives you a place at school
-and a social worker,
-for that angst </div> </figure>
+remember  
+how this simultaneity  
+gives you a place at school  
+and a social worker,  
+for that angst  
+      </div>
+    </figure>
 
-```
-  <!-- IMAGE 4 -->
-  <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
-    <img src="images/photo4.png" alt="Photo 4" loading="lazy">
-    <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
-    <div class="story-box story-left">
-```
+    <!-- IMAGE 4 -->
+    <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
+      <img src="images/photo4.png" alt="Photo 4" loading="lazy">
+      <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
 
-remember
-that nonautonomy
-as a child
+      <div class="story-box story-left">
+remember  
+that nonautonomy  
+as a child  
 
-actions
-dictated otherwise
-by someone else
+actions  
+dictated otherwise  
+by someone else  
 
-remember
-the comfort in embracing
-that other
+remember  
+the comfort in embracing  
+that other  
 
-dictated not by someone else
+dictated not by someone else  
 
-but by something else
-already existing
-in motion </div> </figure>
-
-```
-</div>
-
-<!-- FOOTNOTES EXAMPLE -->
-<div class="text-block">
-  <p>This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a>.</p>
-  <p>Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a>.</p>
-</div>
-
-<section id="footnotes">
-  <h2 style="color:var(--text-color);margin:0 0 12px 0;font-size:18px">Footnotes</h2>
-  <div class="footnote-item" id="fn1">
-    <strong>[1]</strong> Longer paragraph text for footnote 1.
-    <a class="backref" href="#ref-fn1">↩︎ back</a>
-  </div>
-  <div class="footnote-item" id="fn2">
-    <strong>[2]</strong> Footnote text for reference.
-    <a class="backref" href="#ref-fn2">↩︎ back</a>
-  </div>
-</section>
-```
+but by something else  
+already existing  
+in motion  
+      </div>
+    </figure>
 
   </div>
 
-  <!-- MODAL -->
+  <!-- FOOTNOTES -->
+  <div class="text-block">
+    <p>This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a>.</p>
+    <p>Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a>.</p>
+  </div>
 
-  <div id="modal" class="modal" role="dialog" aria-hidden="true">
-    <a href="#" class="modal-close" id="modalClose" aria-label="Close">✕</a>
-    <div class="modal-content" id="modalContent">
-      <img id="modalImg" src="" alt="">
-      <div class="modal-caption" id="modalCaption"></div>
+  <section id="footnotes">
+    <h2 style="color:var(--text-color);margin-bottom:12px;font-size:18px">Footnotes</h2>
+
+    <div class="footnote-item" id="fn1">
+      <strong>[1]</strong> Longer paragraph text for footnote 1.
+      <a class="backref" href="#ref-fn1">↩︎ back</a>
     </div>
+
+    <div class="footnote-item" id="fn2">
+      <strong>[2]</strong> Footnote text for reference.
+      <a class="backref" href="#ref-fn2">↩︎ back</a>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal" role="dialog" aria-hidden="true">
+  <a href="#" class="modal-close" id="modalClose" aria-label="Close">✕</a>
+  <div class="modal-content">
+    <img id="modalImg" src="" alt="">
+    <div class="modal-caption" id="modalCaption"></div>
   </div>
+</div>
 
-  <script>
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const modalCaption = document.getElementById('modalCaption');
-    const modalClose = document.getElementById('modalClose');
+<script>
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modalImg');
+  const modalCaption = document.getElementById('modalCaption');
 
-    document.querySelectorAll('.photo').forEach(fig => {
-      fig.addEventListener('click', () => openModal(fig));
-      fig.addEventListener('keydown', (e) => { if(e.key === 'Enter') openModal(fig); });
-    });
+  document.querySelectorAll('.photo').forEach(fig=>{
+    fig.addEventListener('click',()=>openModal(fig));
+    fig.addEventListener('keydown',e=>{if(e.key==='Enter')openModal(fig);});
+  });
 
-    function openModal(fig){
-      const img = fig.querySelector('img');
-      modalImg.src = img.src;
-      modalImg.alt = img.alt || '';
-      modalCaption.textContent = fig.dataset.caption || '';
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-    }
+  function openModal(fig){
+    const img=fig.querySelector('img');
+    modalImg.src=img.src;
+    modalImg.alt=img.alt;
+    modalCaption.textContent=fig.dataset.caption||'';
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+  }
 
-    function closeModal(){
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden','true');
-      modalImg.src = '';
-      modalCaption.textContent = '';
-    }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    modalImg.src='';
+    modalCaption.textContent='';
+  }
 
-    modalClose.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+  document.getElementById('modalClose').addEventListener('click',e=>{
+    e.preventDefault(); closeModal();
+  });
 
-    /* Smooth highlight on footnote click */
-    document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        setTimeout(()=>{
-          const id = a.getAttribute('href').slice(1);
-          const el = document.getElementById(id);
-          if(el){
-            el.style.transition='background-color 0.4s ease';
-            el.style.backgroundColor='rgba(138,180,255,0.06)';
-            setTimeout(()=>el.style.backgroundColor='transparent',900);
-          }
-        },200);
-      });
-    });
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
 
-    /* Reveal animation */
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{ 
-        if(entry.isIntersecting){ 
-          entry.target.classList.add('visible'); 
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') closeModal();
+  });
+
+  /* Footnote highlight */
+  document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
+    a.addEventListener('click',()=>{
+      setTimeout(()=>{
+        const el=document.getElementById(a.getAttribute('href').slice(1));
+        if(el){
+          el.style.transition='background-color 0.4s ease';
+          el.style.backgroundColor='rgba(138,180,255,0.06)';
+          setTimeout(()=>el.style.backgroundColor='transparent',900);
         }
-      });
-    }, {threshold:0.2});
+      },200);
+    });
+  });
 
-    document.querySelectorAll('figure.photo').forEach(el=>{ observer.observe(el); });
-  </script>
+  /* Reveal animation */
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  },{threshold:0.2});
+
+  document.querySelectorAll('figure.photo').forEach(el=>observer.observe(el));
+</script>
 
 </body>
 </html>
