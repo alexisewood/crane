@@ -2,390 +2,229 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>plier. dlplier. replier. </title>
+  <title>plier. dlplier. replier.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    :root{
-      --max-width:900px;
-      --gap:28px;
-      --text-color:#eaeaea;
-      --muted:#9a9a9a;
-      --accent:#8ab4ff;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #eaeaea;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      -webkit-font-smoothing: antialiased;
     }
 
-    html,body{
-      height:100%;
-      margin:0;
-      background:#000;
-      color:var(--text-color);
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      -webkit-font-smoothing:antialiased;
-      scroll-behavior:smooth;
+    .wrap {
+      max-width: 760px;
+      margin: 48px auto 120px;
+      padding: 0 20px;
     }
 
-    .wrap{
-      max-width:var(--max-width);
-      margin:36px auto;
-      padding:18px;
+    h1 {
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
     }
 
-    h1{margin:0 0 12px 0;font-weight:600}
-
-    .image-list{
-      display:flex;
-      flex-direction:column;
-      gap:var(--gap);
+    .author {
+      color: #9a9a9a;
+      font-size: 14px;
+      margin-bottom: 48px;
     }
 
-    figure.photo{
-      position:relative;
-      border-radius:6px;
-      overflow:hidden;
-      background:#000;
-      cursor:pointer;
-      box-shadow:0 6px 22px rgba(0,0,0,0.7);
-      opacity:0;
-      transform:translateY(20px);
-      transition:opacity 0.8s ease, transform 0.8s ease;
-    }
-    figure.photo.visible{
-      opacity:1;
-      transform:translateY(0);
+    .poem {
+      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
     }
 
-    .photo img{
-      width:100%;
-      display:block;
-      height:auto;
-      transition:transform .3s ease;
-    }
-    .photo:hover img{
-      transform:scale(1.02);
+    .divider {
+      margin: 64px 0;
+      text-align: center;
+      color: #555;
+      letter-spacing: 0.3em;
     }
 
-    .caption{
-      font-size:14px;
-      color:var(--muted);
-      padding:8px 6px 14px 6px;
-    }
+    @media (max-width: 600px) {
+      .wrap {
+        margin-top: 36px;
+      }
 
-    /* Story Boxes */
-    .story-box{
-      max-width:60%;
-      padding:10px 14px;
-      background:rgba(40,40,40,0.9);
-      color:#eaeaea;
-      font-size:14px;
-      line-height:1.4;
-      border-radius:8px;
-      box-shadow:0 4px 14px rgba(0,0,0,0.6);
-      backdrop-filter:blur(4px);
-      opacity:0;
-      transition:opacity 1s ease 0.4s;
-      white-space:pre-wrap;   /* ← SPACING */
-    }
-    figure.photo.visible .story-box{opacity:1;}
-
-    .story-right{position:absolute;bottom:10px;right:10px;}
-    .story-left{position:absolute;bottom:10px;left:10px;}
-    .story-box.relative{
-      position:relative;
-      max-width:100%;
-      margin-top:12px;
-    }
-
-    /* Footnotes */
-    .text-block{margin-top:10px;line-height:1.6;font-size:16px;}
-    .footnote-ref{color:var(--accent);text-decoration:none;font-weight:600;margin-left:6px;}
-    #footnotes{margin-top:48px;border-top:1px solid rgba(255,255,255,0.06);padding-top:22px;color:var(--muted);}
-    .footnote-item{margin:14px 0;font-size:15px;line-height:1.5;}
-    .backref{margin-left:8px;color:var(--accent);text-decoration:none;}
-
-    /* Modal */
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.8);
-      display:none;
-      justify-content:center;
-      align-items:center;
-      z-index:9999;
-      padding:20px;
-    }
-    .modal.open{display:flex;}
-    .modal-content{
-      max-width:92vw;
-      max-height:90vh;
-      overflow:auto;
-      background:linear-gradient(180deg,#0b0b0b,#101010);
-      padding:18px;
-      border-radius:8px;
-      box-shadow:0 12px 40px rgba(0,0,0,0.9);
-    }
-    .modal-content img{width:100%;height:auto;border-radius:4px;}
-    .modal-caption{color:var(--muted);font-size:14px;margin-top:8px;}
-    .modal-close{
-      position:absolute;
-      top:18px;
-      right:22px;
-      color:#fff;
-      font-size:22px;
-      text-decoration:none;
-    }
-
-    @media(max-width:640px){
-      :root{--max-width:100vw;--gap:20px;}
-      .wrap{padding:12px;margin:20px auto;}
-      h1{font-size:20px;}
-      .caption{font-size:13px;}
-      .text-block{font-size:15px;}
-      .modal-content{padding:12px;max-width:95vw;max-height:88vh;}
+      .poem {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 
 <body>
-<div class="wrap">
-  <h1> <em>plier. dlplier. replier.</em> </h1>
-  <p style="color:var(--muted);margin-top:3px">alexis e. wood, 2025.</p>
+  <div class="wrap">
+    <h1><em>plier. dlplier. replier.</em></h1>
+    <div class="author">alexis e. wood, 2025.</div>
 
-  <div class="image-list">
-
-    <!-- IMAGE 1 -->
-    <figure class="photo" data-caption="Photo 1" tabindex="0">
-      <img src="images/photo1.png" alt="Photo 1" loading="lazy">
-      <figcaption class="caption"></figcaption>
-
-      <div class="story-box story-right">
-
-remember       
-playing with  
-paper fortune tellers  
-
-five girls at your table  
+    <div class="poem">
+ember  
+in primary school  
+playing with fortune tellers  
+five girls at my table  
 anxiously giddy  
 
 Four.  
 
-1.  
-2.  
-3.  
-4.  
+1. 2. 3. 4.  
 
 Red.  
 
-R!  
-E!  
-D!  
-      </div>
-    </figure>
+R! E! D!  
+    </div>
 
-    <!-- IMAGE 2 -->
-    <figure class="photo" data-caption="Photo 2 — click to enlarge" tabindex="0">
-      <img src="images/photo2.png" alt="Photo 2" loading="lazy">
-      <figcaption class="caption">Photo 2 — click to enlarge</figcaption>
+    <div class="divider">— — —</div>
 
-      <div class="story-box story-left">
-remember  
-that nonautonomy  
-as a child  
+    <div class="poem">
+I know where that anxiousness comes from – that one type that pushes up from your chest, forcing its way out in a gasping laugh, an embarrassed rebuttal, or tears welling in your eyes. That one that burns the back of the throat.  
 
-actions  
-dictated otherwise  
-by someone else  
+We inherent an orientation towards the straight line, a pre-structured distribution of what’s possible, what’s imaginable. We are  
 
 remember  
-the comfort in embracing  
-that other  
+that nonautonomy as a child  
+your actions dictated otherwise  
+someone else  
+other  
 
+remember  
+comfort in being other  
 dictated not by someone else  
-
-but by something else  
+but something else  
 already existing  
 in motion  
 
-there is  
-no anger  
-no grief  
-if choices  
+how could I be grieving  
+if my choices  
 are not mine to make  
 
-sitting along the ridges  
-of this folded paper  
-
+they sit along the ridges  
+of this paper  
 hidden  
 waiting to unfold  
-
-something else  
-is a fortune teller  
+other is a fortune teller  
 waiting to unfold  
-      </div>
-    </figure>
+    </div>
 
-    <!-- IMAGE 3 -->
-    <figure class="photo" data-caption="Photo 3 — click to enlarge" tabindex="0">
-      <img src="images/photo3.png" alt="Photo 3" loading="lazy">
-      <figcaption class="caption">Photo 3 — click to enlarge</figcaption>
+    <div class="divider">— — —</div>
 
-      <div class="story-box relative">
+    <div class="poem">
 remember  
 when you were 15, angsty  
-reading Vonnegut's <em>Slaughterhouse Five</em>  
-
+reading Vonnegut's Slaughterhouse Five  
 time is annihilated by space  
 
 simultaneously Billy Pilgrim  
 becomes a father and  
 is dead, and  
 is born, into the  
-bombing of Dresden,  
-
+the bombing of Dresden,  
 Tralfamadorians laughing  
 at the futility of human time  
-
-human time, human time, human time  
-tumbling around  
-in the Tralfamadorian zoo  
+human time  
+tumbling around in the  
+Tralfamadorian zoo  
 
 in that school interview  
 you explain that time  
 is not real  
 you are simultaneously  
 alive,  
-and dead, and  
-everything in-between  
+and dead,  
 
 “Everything that ever has been always will be,  
 and everything that ever will be always has been”.  
 
 remember  
-how this simultaneity  
+how simultaneity  
 gives you a place at school  
-and a social worker,  
-for all that angst  
-      </div>
-    </figure>
-
-    <!-- IMAGE 4 -->
-    <figure class="photo" data-caption="Photo 4 — click to enlarge" tabindex="0">
-      <img src="images/photo4.png" alt="Photo 4" loading="lazy">
-      <figcaption class="caption">Photo 4 — click to enlarge</figcaption>
-
-      <div class="story-box story-left">
-remember  
-that nonautonomy  
-as a child  
-
-actions  
-dictated otherwise  
-by someone else  
-
-remember  
-the comfort in embracing  
-that other  
-
-dictated not by someone else  
-
-but by something else  
-already existing  
-in motion  
-      </div>
-    </figure>
-
-  </div>
-
-  <!-- FOOTNOTES -->
-  <div class="text-block">
-    <p>This is an example sentence with a footnote<a class="footnote-ref" href="#fn1" id="ref-fn1">[1]</a>.</p>
-    <p>Another sentence with a second footnote<a class="footnote-ref" href="#fn2" id="ref-fn2">[2]</a>.</p>
-  </div>
-
-  <section id="footnotes">
-    <h2 style="color:var(--text-color);margin-bottom:12px;font-size:18px">Footnotes</h2>
-
-    <div class="footnote-item" id="fn1">
-      <strong>[1]</strong> Longer paragraph text for footnote 1.
-      <a class="backref" href="#ref-fn1">↩︎ back</a>
+and a social worker, for that angst  
     </div>
 
-    <div class="footnote-item" id="fn2">
-      <strong>[2]</strong> Footnote text for reference.
-      <a class="backref" href="#ref-fn2">↩︎ back</a>
+    <div class="divider">— — —</div>
+
+    <div class="poem">
+remember  
+how the inevitability of it all  
+waiting for space to unfold  
+along the creases is a  
+a comfortable misery  
+
+crushing  
+
+I’ve been thinking about how futures arrive already folded.  
+How even in childhood, the world hands us small architectures—  
+paper toys, miniature worlds—  
+that pretend to tell us who we will become.  
+
+Benjamin reminds us these forms are built from the residues of adult life,  
+fragments of a history that believes itself complete.  
+
+A fortune teller is one such fragment:  
+a tiny machine for prediction,  
+a diagram of straight lines and settled destinies.  
+
+Something interrupts.  
+A moment—the cessation of happening—  
+when the predicted future doesn’t sit right in the hands that receive it.  
+That moment is my protagonist’s awakening:  
+the child who opens the fortune teller  
+and discovers only graphite, only scribbles,  
+only the arbitrary marks that once claimed the authority of fate.  
+
+Unfolding is a gesture of refusal.  
+Unfolding is also a revelation:  
+the world, once dismantled, lies there as a field,  
+a sheet of incomplete possibilities.  
+
+Here Deleuze meets Benjamin:  
+the fold is never final.  
+
+Every crease can become another crease.  
+Every surface can become a different topology for living.  
+And so the child begins again—  
+not escaping the material given,  
+but refolding it.  
+
+Gladman enters my thinking.  
+Sentences are spaces you move through,  
+rooms that drift, thresholds that don’t quite hold still.  
+Her characters live in architectures made of hesitation,  
+where orientation is less a direction than an experiment.  
+
+Refolding the paper into a crane  
+is the same kind of experiment:  
+a reassembly of space, a new sentence made from the ruins of the old  
+
+And Moten reminds us that incompleteness is not lacking  
+It is where the fugitive lives,  
+in the break, the cut, the refusal to be finished.  
+The crane is not a fixed form—it is a fugitive one.  
+It carries the marks of its prior life,  
+but arranged otherwise.  
+
+It is what happens when a subject consents not to be  
+the being the world predicted.  
+
+So this project begins with a child’s paper toy  
+and ends with something impossible to foresee—  
+a queer, folded, fragmentary future  
+that rises from the same material  
+but from a different way of touching it.  
+
+Nothing new is added.  
+
+But everything is rearranged.  
+And in that rearrangement,  
+a new world takes flight.
     </div>
-  </section>
-</div>
 
-<!-- MODAL -->
-<div id="modal" class="modal" role="dialog" aria-hidden="true">
-  <a href="#" class="modal-close" id="modalClose" aria-label="Close">✕</a>
-  <div class="modal-content">
-    <img id="modalImg" src="" alt="">
-    <div class="modal-caption" id="modalCaption"></div>
   </div>
-</div>
-
-<script>
-  const modal = document.getElementById('modal');
-  const modalImg = document.getElementById('modalImg');
-  const modalCaption = document.getElementById('modalCaption');
-
-  document.querySelectorAll('.photo').forEach(fig=>{
-    fig.addEventListener('click',()=>openModal(fig));
-    fig.addEventListener('keydown',e=>{if(e.key==='Enter')openModal(fig);});
-  });
-
-  function openModal(fig){
-    const img=fig.querySelector('img');
-    modalImg.src=img.src;
-    modalImg.alt=img.alt;
-    modalCaption.textContent=fig.dataset.caption||'';
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden','false');
-  }
-
-  function closeModal(){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
-    modalImg.src='';
-    modalCaption.textContent='';
-  }
-
-  document.getElementById('modalClose').addEventListener('click',e=>{
-    e.preventDefault(); closeModal();
-  });
-
-  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
-
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape') closeModal();
-  });
-
-  /* Footnote highlight */
-  document.querySelectorAll('a[href^="#fn"]').forEach(a=>{
-    a.addEventListener('click',()=>{
-      setTimeout(()=>{
-        const el=document.getElementById(a.getAttribute('href').slice(1));
-        if(el){
-          el.style.transition='background-color 0.4s ease';
-          el.style.backgroundColor='rgba(138,180,255,0.06)';
-          setTimeout(()=>el.style.backgroundColor='transparent',900);
-        }
-      },200);
-    });
-  });
-
-  /* Reveal animation */
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('visible');
-      }
-    });
-  },{threshold:0.2});
-
-  document.querySelectorAll('figure.photo').forEach(el=>observer.observe(el));
-</script>
-
 </body>
 </html>
